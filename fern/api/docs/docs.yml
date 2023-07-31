@@ -1,0 +1,17 @@
+navigation:
+  - section: Introduction
+    contents:
+      - page: Getting started
+        path: ./intro.mdx
+  - api: API Reference
+title: String | API Docs
+colors:
+  accentPrimary: "#a3d3ff"
+logo:
+  path: ./logo.png
+  href: https://www.meetstring.com/
+favicon: ./favicon.ico
+navbar-links:
+  - type: primary
+    text: Home
+    url: https://meetstring.com
