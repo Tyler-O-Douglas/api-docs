@@ -12,6 +12,12 @@ service:
       response: LeastCostFulfillment
       errors:
         - NotAuthorized
+      examples:
+        - name: Example1
+          request: $CreateLcfRequest.Example1
+          response: 
+            body: 
+              orderId: "USPS Priority Mail"
 
 types:
   CreateLcfRequest:
@@ -50,7 +56,9 @@ types:
 
   ShipTo:
     properties:
-      street1: Street
+      street1:
+        type: string
+        docs: The street address of the customer.  If your customer had a second address line, add street2.
       street2: optional<string>
       city: City
       state: State
@@ -68,12 +76,6 @@ types:
           postalCode: "20500"
           country: US
           isResidential: false
-
-  Street:
-    type: string
-    docs: The street address of the customer.  If your customer had a second address line, add street2.
-    examples:
-      - value: "101 Waller St"
 
   City:
     type: string
@@ -125,10 +127,15 @@ types:
         value: 1.5
 
   LeastCostFulfillment: 
-    type: string
+    properties:
+      orderId: 
+        type: string
+  
     examples:
       - name: Example1
-        value: "USPS Priority Mail"
+        value: 
+          orderId: "USPS Priority Mail"
+
 errors:
   NotAuthorized:
     status-code: 401
