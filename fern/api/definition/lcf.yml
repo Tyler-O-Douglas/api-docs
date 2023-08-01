@@ -124,8 +124,11 @@ types:
       - name: Example1
         value: 1.5
 
-  LeastCostFulfillment: string
-
+  LeastCostFulfillment: 
+    type: string
+    examples:
+      - name: Example1
+        value: "USPS Priority Mail"
 errors:
   NotAuthorized:
     status-code: 401
