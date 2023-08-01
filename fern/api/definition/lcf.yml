@@ -2,7 +2,7 @@
 
 service:
   auth: true
-  base-path: ''
+  base-path: ""
   endpoints:
     CreateLeastCostFulfillment:
       docs: For a shipment, find the lowest cost shipping option based on provided parameters.
@@ -12,104 +12,117 @@ service:
       response: LeastCostFulfillment
       errors:
         - NotAuthorized
-  
+
 types:
   CreateLcfRequest:
     properties:
       order: Order
-
+    examples:
+      - name: Example1
+        value:
+          order:
+            orderId: "shopify_12345"
+            shipTo: $ShipTo.WhiteHouse
+            deliveryCommitment: 3
+            package: $Package.Example1
   Order:
     properties:
-      orderId: 
+      orderId:
         type: OrderId
         docs: A unique identifier for the order.
-      shipTo: 
+      shipTo:
         type: ShipTo
         docs: The address the order is being shipped to.
-      deliveryCommitment: 
-        type: DeliveryCommitment
-        docs: The number of days from the order date that the order must be delivered to the customer by.  If no limit, set as null.
-      package: 
+      deliveryCommitment:
+        type: integer
+        docs: |
+          The number of days from the order date that the order must be 
+          delivered to the customer by.  If no limit, set as null.
+      package:
         type: Package
         docs: The dimensions and weight of the package being shipped.
 
-  OrderId: 
+  OrderId:
     type: string
     docs: The unique identifier for the order, this can be an order number from your Shopify store for example.
     examples:
-      - value: 'String-Test-12345'
+      - value: "String-Test-12345"
 
-  ShipTo:  
+  ShipTo:
     properties:
-        street1: Street
-        street2: optional<string>
-        city: City
-        state: State
-        postalCode: PostalCode
-        country: Country
-        residential: Residential
+      street1: Street
+      street2: optional<string>
+      city: City
+      state: State
+      postalCode: PostalCode
+      country: Country
+      isResidential:
+        type: boolean
+        docs: If residential, set as true.  If commercial, set as false.
+    examples:
+      - name: WhiteHouse
+        value:
+          street1: 1600 Pennsylvania Avenue NW
+          city: Washington DC
+          state: Washington DC
+          postalCode: "20500"
+          country: US
+          isResidential: false
 
   Street:
     type: string
     docs: The street address of the customer.  If your customer had a second address line, add street2.
     examples:
-      - value: '101 Waller St'
+      - value: "101 Waller St"
 
   City:
     type: string
     docs: The city the customer lives in.
     examples:
-      - value: 'San Francisco'
+      - value: "San Francisco"
 
   State:
     type: string
     docs: The state the customer lives in. Two digit code.
     examples:
-      - value: 'CA'
+      - value: "CA"
 
   PostalCode:
     type: string
     docs: The postal code the customer lives in.  This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.
     examples:
-      - value: '94102'
+      - value: "94102"
 
   Country:
     enum:
       - US
     docs: The 2 digit country code of the country the order is being shipped to.  Only US is supported at this time.
     examples:
-      - value: 'US'
-  
-  Residential:
-    type: boolean
-    docs: Is the address residential or commercial?  If residential, set as true.  If commercial, set as false.
-    examples:
-      - value: true
+      - value: "US"
 
   Package:
     properties:
-        dimensions: Dimensions
-        weight: Weight
-    
+      dimensions: Dimensions
+      weight: Weight
+    examples:
+      - name: Example1
+        value:
+          dimensions: $Dimensions.Example1
+          weight: $Weight.Example1
 
   Dimensions:
     type: set<double>
     docs: The length, width, and height of the package in inches.  Order does not matter.
     examples:
-      - value: [14, 10, 3]
+      - name: Example1
+        value: [14, 10, 3]
 
-  Weight: 
+  Weight:
     type: double
     docs: The weight of the package in pounds. Include up to 2 decimal places.
     examples:
-      - value: 1.5 
-
-  DeliveryCommitment:
-    type: integer
-    docs: The number of days from the order date that the order must be delivered to the customer by.  If no limit, set as null.
-    examples:
-      - value: 3
-
+      - name: Example1
+        value: 1.5
 
   LeastCostFulfillment: string
 
