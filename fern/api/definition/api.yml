@@ -1,4 +1,11 @@
 name: api
-auth: basic
+auth: MyAuthScheme
+auth-schemes:
+  MyAuthScheme:
+    header: Authorization
+    type: basic
 error-discrimination:
   strategy: status-code
+environments:
+  Production: https://api.meetstring.com
+default-environment: Production
