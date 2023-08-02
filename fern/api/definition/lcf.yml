@@ -12,12 +12,6 @@ service:
       response: LeastCostFulfillment
       errors:
         - NotAuthorized
-      examples:
-        - name: Example1
-          request: $CreateLcfRequest.Example1
-          response: 
-            body: 
-              orderId: "USPS Priority Mail"
 
 types:
   CreateLcfRequest:
@@ -31,6 +25,7 @@ types:
             shipTo: $ShipTo.WhiteHouse
             deliveryCommitment: 3
             package: $Package.Example1
+  
   Order:
     properties:
       orderId:
@@ -58,12 +53,23 @@ types:
     properties:
       street1:
         type: string
-        docs: The street address of the customer.  If your customer had a second address line, add street2.
+        docs: The street address you're shipping an order to.  If your customer has a second address line, like an apartment number add street2.
       street2: optional<string>
-      city: City
-      state: State
-      postalCode: PostalCode
-      country: Country
+      city:
+        type: string
+        docs: The city you're shipping an order to'.
+      state:
+        type: string
+        docs: |
+          The state you're shipping an order to. 
+          Two digit code.  For example, 'CA' for California.
+      postalCode:
+        type: string
+        docs: |
+          The postal code you're shipping an order to. 
+          This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.
+      country: 
+        type: Country
       isResidential:
         type: boolean
         docs: If residential, set as true.  If commercial, set as false.
@@ -76,31 +82,11 @@ types:
           postalCode: "20500"
           country: US
           isResidential: false
-
-  City:
-    type: string
-    docs: The city the customer lives in.
-    examples:
-      - value: "San Francisco"
-
-  State:
-    type: string
-    docs: The state the customer lives in. Two digit code.
-    examples:
-      - value: "CA"
-
-  PostalCode:
-    type: string
-    docs: The postal code the customer lives in.  This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.
-    examples:
-      - value: "94102"
-
+  
   Country:
     enum:
       - US
-    docs: The 2 digit country code of the country the order is being shipped to.  Only US is supported at this time.
-    examples:
-      - value: "US"
+    docs: The country you're shipping an order to.  Only 'US' is supported at this time.
 
   Package:
     properties:
@@ -130,11 +116,92 @@ types:
     properties:
       orderId: 
         type: string
+      shipTo: 
+        type: ShipTo
+      tags:
+        type: set<string>
+        docs: An array of tags with high level information about the prediction String just made. 
+      comments: 
+        type: set<string>
+        docs: |
+          An array of comments with detailed information about the prediction String just made.
+          First comment includes the carrier, service code, account, cost, and package
+      service: Service
+      parcel: Parcel
+
+  Service:
+    properties:
+      carrier:
+        type: string
+        docs: The carrier that will be used to ship the package.
+      service:
+        type: string
+        docs: The service code that will be used to ship the package.
+      deliveryDate: 
+        type: date
+        docs: An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.
+      saturdayDelivery:
+        type: boolean
+        docs: If the package can be delivered by the carrier on Saturday. 'True' only possible for UPS and FedEx.
+      accountNumber:
+        type: string
+        docs: You carrier account that will be used to ship the package.
+      cost:
+        type: double
+        docs: The cost of the shipping label String reccomends. 
   
+  Parcel:
+    properties:
+      name: 
+        type: string
+        docs: |
+          The name of the package String reccomends.
+          Defaults to 'CUSTOM_PACKAGE' if the user provides a package.
+      dimensions: 
+        type: ParcelDimensions
+      weight: 
+        type: ParcelWeight
     examples:
-      - name: Example1
-        value: 
-          orderId: "USPS Priority Mail"
+      - name: TestParcel
+        value:
+          name: "CUSTOM_PACKAGE"
+          dimensions:
+            units: "inches"
+            length: 14
+            width: 10
+            height: 3
+          weight:
+            value: 1.5
+            unit: "pounds"
+
+  ParcelDimensions:
+    properties:
+      units:
+        type: string
+        docs: The units of measurement for the package dimensions.  Only 'inches' is supported at this time.
+      length:
+        type: double
+        docs: The length of the package in inches.
+      width:
+        type: double
+        docs: The width of the package in inches.
+      height:
+        type: double
+        docs: The height of the package in inches.
+  
+  ParcelWeight:
+    properties:
+      value:
+        type: double
+        docs: The weight of the package in pounds.
+      unit:
+        type: string
+        docs: The units of measurement for the package weight.  Only 'pounds' is supported at this time.
+
+
+
+
+
 
 errors:
   NotAuthorized:
