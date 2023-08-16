@@ -25,6 +25,8 @@ To access the endpoint, please use Base64 to encode your username and password c
 Encoding your credentials are as easy as seperating your username and password with a colon (username:password) and then encoding the resulting string with a Base64 plugin or tool.<br/>
 An example of how to use Base64 to encode your username and password combination can be found [here](https://www.base64encode.org/).<br/>
 <br/>
+You can also use something like the Base64 package in node.js and run b64.btoa('username:password') to encode your credentials. They should look like 'Basic <your encoded credentials>' when you're done.
+<br/>
 Your credentials will be provided to you by the String team.  
 Do not share these credentials outside of your organziation because any requests made with your credentials will be billed to your account.
 
