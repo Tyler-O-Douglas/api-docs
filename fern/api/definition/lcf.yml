@@ -146,10 +146,30 @@ types:
     properties:
       carrier:
         type: string
-        docs: The carrier that will be used to ship the package.
+        docs: |
+          The carrier that will be used to ship the package.
+          Options are: 'usps', 'ups', 'fedex', 'dhl'
       service:
         type: string
-        docs: The service code that will be used to ship the package.
+        docs: | 
+          The service code that will be used to ship the package.
+          Options are as follows:
+            USPS: 
+              'usps_first_class_mail', 'usps_priority_mail', 'usps_priority_mail_express', 'usps_ground_advantage', 'usps_parcel_select'
+            UPS: 
+              'ups_ground', 'ups_surepost_less_than_1_lb', 'ups_surepost_1_lb_or_greater', 'ups_next_day_air', 'ups_next_day_air_early_am', 'ups_next_day_air_saver', 'ups_2nd_day_air', 'ups_2nd_day_air_am', 'ups_3_day_select', 'ups_mail_innovations_first_class', 'ups_mail_innovations_priority_mail'
+            FedEx:
+              'fedex_ground', 'fedex_home_delivery', 'fedex_smart_post_parcel_select', 'fedex_smartpost_parcel_select_lightweight', 'fedex_2day', 'fedex_2day_am', 'fedex_express_saver', 'fedex_standard_overnight', 'fedex_priority_overnight', 'fedex_first_overnight'
+      package: 
+        type: string
+        docs: | 
+          The package code for for the requested service.  This will almost always be 'package' unless the service requires a specific package code.
+          USPS flat-rate package codes include:
+            'flat_rate_padded_envelope', 'small_flat_rate_box', 'medium_flat_rate_box', 'medium_flat_rate_box', 'large_flat_rate_box
+          USPS Special-rates include:
+            'cubic', 'large_envelope_or_flat'
+          FedEx flat-rate package codes include:
+            'fedex_envelope_onerate', 'fedex_pak_onerate', 'fedex_small_box_onerate', 'fedex_medium_box_onerate', 'fedex_large_box_onerate', 'fedex_extra_large_box_onerate'
       deliveryDate: 
         type: date
         docs: An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.
@@ -158,20 +178,23 @@ types:
         docs: If the package can be delivered by the carrier on Saturday. 'True' only possible for UPS and FedEx.
       accountNumber:
         type: string
-        docs: You carrier account that will be used to ship the package.
+        docs: Your carrier account that will be used to ship the package.
       cost:
         type: double
         docs: The cost of the shipping label String recommends. 
     examples: 
       - name: Example1
-        value: 
-          carrier: "carrier"
-          service: "service"
-          deliveryDate: "2017-07-21"
+        value:
+          carrier: "fedex"
+          service: "fedex_2day"
+          package: "fedex_medium_box_onerate"
+          deliveryDate: "2023-06-09"
           saturdayDelivery: false
-          accountNumber: "acc_1234"
-          cost: 2.00
+          accountNumber: "StringTest12345"
+          cost: 12.35
+
   
+
   Parcel:
     properties:
       name: 
