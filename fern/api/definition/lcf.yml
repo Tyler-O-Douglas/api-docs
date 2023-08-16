@@ -12,6 +12,10 @@ service:
       response: LeastCostFulfillment
       errors:
         - NotAuthorized
+      examples: 
+        - request: $CreateLcfRequest.Example1
+          response: 
+            body: $LeastCostFulfillment.Example1
 
 types:
   CreateLcfRequest:
@@ -128,6 +132,15 @@ types:
           First comment includes the carrier, service code, account, cost, and package
       service: Service
       parcel: Parcel
+    examples: 
+      - name: Example1
+        value: 
+          orderId: "shopify_12345"
+          shipTo: $ShipTo.WhiteHouse
+          tags: []
+          comments: []
+          service: $Service.Example1
+          parcel: $Parcel.TestParcel
 
   Service:
     properties:
@@ -168,9 +181,9 @@ types:
         docs: Your carrier account that will be used to ship the package.
       cost:
         type: double
-        docs: The cost of the shipping label String reccomends. 
-    examples:
-      - name: TestService
+        docs: The cost of the shipping label String recommends. 
+    examples: 
+      - name: Example1
         value:
           carrier: "fedex"
           service: "fedex_2day"
@@ -179,6 +192,7 @@ types:
           saturdayDelivery: false
           accountNumber: "StringTest12345"
           cost: 12.35
+
   
 
   Parcel:
