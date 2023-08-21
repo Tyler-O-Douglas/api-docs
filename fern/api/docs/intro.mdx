@@ -7,12 +7,10 @@ String finds the lowest cost shipping option that will arrive in your specified 
 
 ### API Up-time
 
-<P style={{lineHeight: "2rem"}}>
-<span>String is built to be highly reliable. As such we aim for 99.9% uptime.
- Because we're consistently releasing impovements for String while maintiaing high reliabilty, 
- we have a daily maintanence window where the API may be down for as long as 20 minutes.
- Our maintanence window is from 11PM PT to 12pm PT in order to minimize service interuptions.</span>
-</P>
+String is built to be highly reliable. As such we aim for 99.9% uptime.
+Because we're consistently releasing impovements for String while maintiaing high reliabilty,
+we have a daily maintanence window where the API may be down for as long as 20 minutes.
+Our maintanence window is from 11PM PT to 12pm PT in order to minimize service interuptions.
 
 ### Base URL
 
@@ -20,13 +18,34 @@ Our endpoint is available via HTTPS at `https://api.meetstring.com`.
 
 ### Authorization
 
-String uses Basic Authorization with Base64 encoding of your credendtials to secure your requests. 
-To access the endpoint, please use Base64 to encode your username and password combination.<br/>  
-Encoding your credentials are as easy as seperating your username and password with a colon (username:password) and then encoding the resulting string with a Base64 plugin or tool.<br/>
-An example of how to use Base64 to encode your username and password combination can be found [here](https://www.base64encode.org/).<br/>
-<br/>
-You can also use something like the Base64 package in node.js and run b64.btoa('username:password') to encode your credentials. They should look like 'Basic <your encoded credentials>' when you're done.
-<br/>
+String uses Basic Authorization with Base64 encoding of your credendtials to secure your requests.
+To access the endpoint, please use Base64 to encode your username and password combination.
+
+Encoding your credentials are as easy as seperating your username and password with a colon (username:password) and then encoding the resulting string with a Base64 plugin or tool.
+An example of how to use Base64 to encode your username and password combination can be found [here](https://www.base64encode.org/).
+
+You can also use something like the Base64 package in node.js and run `b64.btoa('username:password')` to encode your credentials. 
+They should look like `Basic <your encoded credentials>` when you're done.
+
 Your credentials will be provided to you by the String team.  
 Do not share these credentials outside of your organziation because any requests made with your credentials will be billed to your account.
 
+### Codes
+
+String returns pre-defined codes for the selected Carrier, Service Level,
+and Package Type to indicate how you should configure your reuqest to get a shipping label for the selected carrier.  
+These codes should be interpreted by your application and mapped to the appropriate values for the selected carrier.
+
+### Carrier Codes
+
+String will return one of the following carrier codesto indicate what carrier you should use to ship your package.
+If you are using a carriernot incldued in this list, please contact the String team to discuss adding support for your carrier.
+
+- `USPS` - "usps"
+- `UPS` - "ups"
+- `FedEx` - "fedex"
+- `DHL` - "dhl"
+
+### Service Level Codes
+
+String will return one of the following service level codes to indicate what service level you should use to ship your package. Each carrtier has it's own unique codes that will not be returned for other carriers.
