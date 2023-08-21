@@ -3,4 +3,6 @@ groups:
   local:
     generators: [] #can add sdk generators later
     docs:
-      domain: string.docs.buildwithfern.com
+      domain: https://string.docs.buildwithfern.com
+      custom-domains: 
+        - https://docs.meetstring.com
