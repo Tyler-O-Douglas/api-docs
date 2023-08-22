@@ -1,51 +1,155 @@
 ### Welcome 👋
 
 Welcome to String's API documentation! Here you'll find information about the single endpoint available to you,
-as well as the parameters and responses it will accept and return.
+as well as the parameters and responses it will accept and return. String finds the fastest and lowest cost shipping option for any parcel shipment
+in the United States based on the parameters you provide. 
 
-String finds the lowest cost shipping option that will arrive in your specified time window for any order in the United States.
+String can filter out different carriers and service levels based on your preferences and business rules.
+String can also filter out different carriers and service levels based on time-in-transit requirements.
+All of this on the backend so all you need to do is request a shipping rate and print a label!
 
-### API Up-time
+### Up-Time
 
-String is built to be highly reliable. As such we aim for 99.9% uptime.
+String is built to be highly reliable and we aim for 99.9% uptime.
 Because we're consistently releasing impovements for String while maintiaing high reliabilty,
 we have a daily maintanence window where the API may be down for as long as 20 minutes.
 Our maintanence window is from 11PM PT to 12pm PT in order to minimize service interuptions.
 
-### Base URL
+### Our Single Endpoint Model
 
-Our endpoint is available via HTTPS at `https://api.meetstring.com`.
+Our goal is to make String as simple and effective as possible so we've designed our API to be a single endpoint.
+The endpoint is available at `https://api.meetstring.com/lcf`.
+
+In the future we may add additional endpoints to the API to incorporate new features.
 
 ### Authorization
 
 String uses Basic Authorization with Base64 encoding of your credendtials to secure your requests.
-To access the endpoint, please use Base64 to encode your username and password combination.
+To access the endpoint, you must use Base64 to encode your username and password combination provided by String.
 
-Encoding your credentials are as easy as seperating your username and password with a colon (username:password) and then encoding the resulting string with a Base64 plugin or tool.
+Encoding your credentials are as easy as seperating your username and password with a colon `username:password` and then encoding the formed string with a Base64 plugin or tool.
 An example of how to use Base64 to encode your username and password combination can be found [here](https://www.base64encode.org/).
 
-You can also use something like the Base64 package in node.js and run `b64.btoa('username:password')` to encode your credentials. 
+You can also use something like the Base64 package in node.js and run `b64.btoa('username:password')`. 
 They should look like `Basic <your encoded credentials>` when you're done.
 
 Your credentials will be provided to you by the String team.  
 Do not share these credentials outside of your organziation because any requests made with your credentials will be billed to your account.
 
-### Codes
+### How String Works
 
-String returns pre-defined codes for the selected Carrier, Service Level,
-and Package Type to indicate how you should configure your reuqest to get a shipping label for the selected carrier.  
-These codes should be interpreted by your application and mapped to the appropriate values for the selected carrier.
+'LCF' stands for 'Least Cost Fulfillment' and is the name of the endpoint you'll use to request shipping rates from String.
+String returns the fastest and most cost-effective shipping configuration for a shipment based on the parameters you provide.  
+
+To find the optimal service for every shipment, String It factors in things like package cost, delivery speed, fees, and any surcharges.
+By using accurate, robust, and real-time data, String can precisely find the best shipping option for any parcel shipment in the United States with a single API request.
+
+After you make a request to the [/lcf](https://docs.meetstring/api-reference/lcf) endpoint,
+String does the hard work to find the best carrier and service level for your shipment.
+String considers any qualfiying carrier, service level, and package option available for you based on the parameters you provide. 
+
+In order to indicate the proper configuration for a shipment, String will return the following codes to you which must be interpreted
+by your application and mapped to the appropriate values for the selected carrier.  Please refer to the [LCF endpoint documentation](https://docs.meetstring/api-reference/lcf)
+for a complete example response and more information on how to properly make a request to the /lcf endpoint.
 
 ### Carrier Codes
 
-String will return one of the following carrier codesto indicate what carrier you should use to ship your package.
-If you are using a carriernot incldued in this list, please contact the String team to discuss adding support for your carrier.
+String will return one of the following carrier codes in order to indicate what carrier you should use to ship your package. 
+If you're using a carrier not incldued in this list, please contact the String team to discuss adding support for your carrier.
+String can support any carrier with an API.
 
-- `USPS` - "usps"
-- `UPS` - "ups"
-- `FedEx` - "fedex"
-- `DHL` - "dhl"
+- `usps` 
+- `ups` 
+- `fedex`
+- `dhl`
 
-### Service Level Codes
+### Service Codes
 
-String will return one of the following service level codes to indicate what service level you should use to ship your package. Each carrtier has it's own unique codes that will not be returned for other carriers.
+String will return one of the following service codes to indicate what service level you should use to ship your package. Each carrier has it's own unique codes that will not be returned for other carriers.
+
+#### USPS Service Codes
+
+- `usps_first_class_mail` USPS will convert this to Ground Advantage by default
+- `usps_priority_mail`
+- `usps_priority_mail_express`
+- `usps_ground_advantage` 
+
+#### UPS Service Codes
+
+- `ups_ground`
+- `ups_3_day_select`
+- `ups_2nd_day_air` 
+- `ups_2nd_day_air_am`
+- `ups_next_day_air_saver` 
+- `ups_next_day_air` 
+- `ups_next_day_air_early_am` 
+- `ups_mail_innovations_first_class` For Mail Innovations shipments under 1lb
+- `ups_mail_innovations_priority_mail` For Mail Innovations shipments over 1lb
+- `ups_surepost_less_than_1lb` For SurePost shipments under 1lb
+- `ups_surepost_1_lb_or_greater` For SurePost shipments over 1lb
+
+#### FedEx Service Codes
+
+- `fedex_ground` 
+- `fedex_home_delivery` 
+- `fedex_2day` 
+- `fedex_2day_am` 
+- `fedex_express_saver` 
+- `fedex_standard_overnight`
+- `fedex_priority_overnight` 
+- `fedex_first_overnight`
+- `fedex_smart_post_parcel_select` For SmartPost shipments over 1lb
+- `fedex_smart_post_parcel_select_lightweight` For SmartPost shipments under 1lb
+
+### DHL Service Codes
+
+- `smartmail_parcels_ground` For SmartMail standard shipments under 1lb
+- `smartmail_parcels_expedited` For SmartMail expedited shipments under 1lb
+- `dhl_sm_parcel_expedited_max` 
+- `smartmail_parcel_plus_ground`
+- `smartmail_parcel_plus_expedited` 
+
+### Package Codes
+
+String will return one of the following package type codes to indicate how your parcel will be rated by the carrier selected.
+This is important because String can select between flat rate options offered by carriers and standard rates based on the size and weight of your package.
+In some cases, carriers let you use your own packaging for flat rate serivces.  For example FedEx One Rate allows this for qualfiying packages.
+
+In addition to the package code, String will also include details about the parcel you should use to make sure your shipping label is configured properly.
+This information will be retruned to you as an object with key 'parcel'.
+Please refer to 'API REFERENCE' -> 'Lcf' for an example of how package information is returned to you via the API.
+
+#### Generic Package Codes
+
+ - `package` Your own custom packaging.
+
+#### USPS Package Codes
+
+- `usps_flat_rate_envelope` You must use a USPS Flat Rate Envelope to ship this parcel.
+- `small_flat_rate_box` You must use a USPS Small Flat Rate Box to ship this parcel.
+- `medium_flat_rate_box` You must use a USPS Medium Flat Rate Box to ship this parcel.
+- `large_flat_rate_box` You must use a USPS Large Flat Rate Box to ship this parcel.
+
+#### UPS Package Codes
+
+- `ups_express_pak` You must use a UPS Pak to ship this parcel.
+- `ups_express_box` You must use a UPS Express Box to ship this parcel.
+- `ups_express_box_small` You must use a UPS Express Box Small to ship this parcel.
+- `ups_express_box_medium` You must use a UPS Express Box Medium to ship this parcel.
+- `ups_25_kg_box` You must use a UPS 25kg Box to ship this parcel.
+- `ups_10_kg_box` You must use a UPS 10kg Box to ship this parcel.
+
+#### FedEx Package Codes
+
+- `fedex_envelope` You must use a FedEx Envelope to ship this parcel.
+- `fedex_pak_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_small_box_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_medium_box_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_large_box_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_extra_large_box_onerate` You can use your own packaging if approved by FedEx.
+
+#### DHL Package Codes
+
+At this time, DHL does not offer any flat rate packaging options for DHL Smartmail shipments.  You must use your own packaging to ship with DHL Smartmail.
+
+- `package` You must use your own packaging to ship this parcel.
