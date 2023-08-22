@@ -5,7 +5,7 @@ service:
   base-path: ""
   endpoints:
     CreateLeastCostFulfillment:
-      docs: For a shipment, find the lowest cost shipping option based on provided parameters.
+      docs: For a shipment, find the lowest cost and fasest shipping option based on provided parameters.
       method: POST
       path: /lcf
       request: CreateLcfRequest
@@ -33,50 +33,48 @@ types:
   Order:
     properties:
       orderId:
-        type: OrderId
-        docs: A unique identifier for the order.
+        type: string
+        docs: |
+          A unique identifier for the shipment.
+          This is used for future reference and must be unique.
       shipTo:
         type: ShipTo
-        docs: The address the order is being shipped to.
+        docs: The address the shipment is being shipped to.
       deliveryCommitment:
         type: integer
         docs: |
-          The number of days from the order date that the order must be 
-          delivered to the customer by.  If no limit, set as null.
+          The time-in-transit limit for a shipment.  If no limit, set as null.
       package:
         type: Package
         docs: The dimensions and weight of the package being shipped.
-
-  OrderId:
-    type: string
-    docs: The unique identifier for the order, this can be an order number from your Shopify store for example.
-    examples:
-      - value: "String-Test-12345"
 
   ShipTo:
     properties:
       street1:
         type: string
-        docs: The street address you're shipping an order to.  If your customer has a second address line, like an apartment number add street2.
+        docs: |
+          The street address you're shipping a package to.  
+          If your customer has a second address line, like an apartment number, add street2.
       street2: optional<string>
       city:
         type: string
-        docs: The city you're shipping an order to'.
+        docs: The city you're shipping a package to.
       state:
         type: string
         docs: |
-          The state you're shipping an order to. 
-          Two digit code.  For example, 'CA' for California.
+          The state you're shipping a package to. 
+          Two digit code.  For example, 'CA' for California or 'OH' for Ohio.
       postalCode:
         type: string
         docs: |
-          The postal code you're shipping an order to. 
+          The postal code you're shipping a package to. 
           This must be a 5 or 9 digit numerical code.  If 9 digits, you must include a hyphen between the first 5 and last 4 digits.
+          9 digit example: '12345-6789'
       country: 
         type: Country
       isResidential:
         type: boolean
-        docs: If residential, set as true.  If commercial, set as false.
+        docs: If the address is residential, set as true.  If commercial, set as false.
     examples:
       - name: WhiteHouse
         value:
@@ -111,7 +109,7 @@ types:
 
   Weight:
     type: double
-    docs: The weight of the package in pounds. Include up to 2 decimal places.
+    docs: The weight of the package in pounds (lbs). Include up to 2 decimal places.
     examples:
       - name: Example1
         value: 1.5
@@ -124,7 +122,9 @@ types:
         type: ShipTo
       tags:
         type: set<string>
-        docs: An array of tags with high level information about the prediction String just made. 
+        docs: |
+          Returns 'LEAST COST FULFILLMENT' if the shipment is the least cost fulfillment option.
+          Returns 'NEEDS MANUAL PROCESSING' if String failed to find a shipping configuration.
       comments: 
         type: set<string>
         docs: |
@@ -137,48 +137,40 @@ types:
         value: 
           orderId: "shopify_12345"
           shipTo: $ShipTo.WhiteHouse
-          tags: []
-          comments: []
+          tags: ['LEAST COST FULFILLMENT']
+          comments: ['UPS - StringTest12345 - Package - Estimated Delivery Date: 2023-06-09']
           service: $Service.Example1
           parcel: $Parcel.TestParcel
-
+      
   Service:
     properties:
       carrier:
         type: string
         docs: |
           The carrier that will be used to ship the package.
-          Options are: 'usps', 'ups', 'fedex', 'dhl'
+          Refer to 'Getting Started' for a list of possible carrier codes.
       service:
         type: string
         docs: | 
           The service code that will be used to ship the package.
-          Options are as follows:
-            USPS: 
-              'usps_first_class_mail', 'usps_priority_mail', 'usps_priority_mail_express', 'usps_ground_advantage', 'usps_parcel_select'
-            UPS: 
-              'ups_ground', 'ups_surepost_less_than_1_lb', 'ups_surepost_1_lb_or_greater', 'ups_next_day_air', 'ups_next_day_air_early_am', 'ups_next_day_air_saver', 'ups_2nd_day_air', 'ups_2nd_day_air_am', 'ups_3_day_select', 'ups_mail_innovations_first_class', 'ups_mail_innovations_priority_mail'
-            FedEx:
-              'fedex_ground', 'fedex_home_delivery', 'fedex_smart_post_parcel_select', 'fedex_smartpost_parcel_select_lightweight', 'fedex_2day', 'fedex_2day_am', 'fedex_express_saver', 'fedex_standard_overnight', 'fedex_priority_overnight', 'fedex_first_overnight'
+          Refer to 'Getting Started' for a list of possible service codes.
       package: 
         type: string
         docs: | 
-          The package code for for the requested service.  This will almost always be 'package' unless the service requires a specific package code.
-          USPS flat-rate package codes include:
-            'flat_rate_padded_envelope', 'small_flat_rate_box', 'medium_flat_rate_box', 'medium_flat_rate_box', 'large_flat_rate_box
-          USPS Special-rates include:
-            'cubic', 'large_envelope_or_flat'
-          FedEx flat-rate package codes include:
-            'fedex_envelope_onerate', 'fedex_pak_onerate', 'fedex_small_box_onerate', 'fedex_medium_box_onerate', 'fedex_large_box_onerate', 'fedex_extra_large_box_onerate'
+          The package that will be used to ship the package.
+          Refer to 'Getting Started' for a list of possible package codes.
       deliveryDate: 
         type: date
         docs: An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, 2017-07-21.
       saturdayDelivery:
         type: boolean
-        docs: If the package can be delivered by the carrier on Saturday. 'True' only possible for UPS and FedEx.
+        docs: |
+          If the package can be delivered by the carrier on Saturday. 'True' is only possible for UPS and FedEx.
+          Your shipment may still be delivered on Saturday even if this is set to 'False'.
       accountNumber:
         type: string
-        docs: Your carrier account that will be used to ship the package.
+        docs: |
+          Your carrier account that was used to get this rated shipment.
       cost:
         type: double
         docs: The cost of the shipping label String recommends. 
@@ -202,6 +194,7 @@ types:
         docs: |
           The name of the package String reccomends.
           Defaults to 'CUSTOM_PACKAGE' if the user provides a package.
+          If the package is a flat rate package, the name will be the same as the package code.
       dimensions: 
         type: ParcelDimensions
       weight: 
