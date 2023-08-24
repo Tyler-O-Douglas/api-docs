@@ -9,6 +9,10 @@ navigation:
         path: ./content/intro.mdx
       - page: Carriers
         path: ./content/carriers.mdx
+      - page: Services
+        path: ./content/services.mdx
+      - page: Packages
+        path: ./content/packages.mdx
   - api: API Reference
 title: String | API Docs
 colors:

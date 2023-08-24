@@ -1,0 +1,44 @@
+### Package Codes
+
+String will return one of the following package type codes to indicate how your parcel will be rated by the carrier selected.
+This is important because String can select between flat rate options offered by carriers and standard rates based on the size and weight of your package.
+In some cases, carriers let you use your own packaging for flat rate serivces.  For example FedEx One Rate allows this for qualfiying packages.
+
+In addition to the package code, String will also include details about the parcel you should use to make sure your shipping label is configured properly.
+This information will be retruned to you as an object with key 'parcel'.
+Please refer to 'API REFERENCE' -> 'Least Cost Fulfillment' for an example of how package information is returned to you via the API.
+
+#### Generic Package Codes
+
+ - `package` Your own custom packaging.
+
+#### USPS Package Codes
+
+- `usps_flat_rate_envelope` You must use a USPS Flat Rate Envelope to ship this parcel.
+- `small_flat_rate_box` You must use a USPS Small Flat Rate Box to ship this parcel.
+- `medium_flat_rate_box` You must use a USPS Medium Flat Rate Box to ship this parcel.
+- `large_flat_rate_box` You must use a USPS Large Flat Rate Box to ship this parcel.
+
+#### UPS Package Codes
+
+- `ups_express_pak` You must use a UPS Pak to ship this parcel.
+- `ups_express_box` You must use a UPS Express Box to ship this parcel.
+- `ups_express_box_small` You must use a UPS Express Box Small to ship this parcel.
+- `ups_express_box_medium` You must use a UPS Express Box Medium to ship this parcel.
+- `ups_25_kg_box` You must use a UPS 25kg Box to ship this parcel.
+- `ups_10_kg_box` You must use a UPS 10kg Box to ship this parcel.
+
+#### FedEx Package Codes
+
+- `fedex_envelope` You must use a FedEx Envelope to ship this parcel.
+- `fedex_pak_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_small_box_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_medium_box_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_large_box_onerate` You can use your own packaging if approved by FedEx.
+- `fedex_extra_large_box_onerate` You can use your own packaging if approved by FedEx.
+
+#### DHL Package Codes
+
+At this time, DHL does not offer any flat rate packaging options for DHL Smartmail shipments.  You must use your own packaging to ship with DHL Smartmail.
+
+- `package` You must use your own packaging to ship this parcel.
