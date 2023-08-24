@@ -44,24 +44,16 @@ String returns the fastest and most cost-effective shipping configuration for a 
 To find the optimal service for every shipment, String It factors in things like package cost, delivery speed, fees, and any surcharges.
 By using accurate, robust, and real-time data, String can precisely find the best shipping option for any parcel shipment in the United States with a single API request.
 
-After you make a request to the [/lcf](https://docs.meetstring/api-reference/lcf) endpoint,
+After you make a request to the [/lcf](https://docs.meetstring.com/api-reference/least-cost-fulfillment) endpoint,
 String does the hard work to find the best carrier and service level for your shipment.
 String considers any qualfiying carrier, service level, and package option available for you based on the parameters you provide. 
 
 In order to indicate the proper configuration for a shipment, String will return the following codes to you which must be interpreted
-by your application and mapped to the appropriate values for the selected carrier.  Please refer to the [LCF endpoint documentation](https://docs.meetstring/api-reference/lcf)
+by your application and mapped to the appropriate values for the selected carrier.  Please refer to the [LCF endpoint documentation](https://docs.meetstring.com/api-reference/least-cost-fulfillment)
 for a complete example response and more information on how to properly make a request to the /lcf endpoint.
 
-### Carrier Codes
-
-String will return one of the following carrier codes in order to indicate what carrier you should use to ship your package. 
-If you're using a carrier not incldued in this list, please contact the String team to discuss adding support for your carrier.
-String can support any carrier with an API.
-
-- `usps` 
-- `ups` 
-- `fedex`
-- `dhl`
+### [Carriers](./carriers)
+Informaiton on how String will return what carrier to use to you.
 
 ### Service Codes
 
@@ -77,7 +69,7 @@ String will return one of the following service codes to indicate what service l
 #### UPS Service Codes
 
 - `ups_ground`
-- `ups_3_day_select`
+- `ups_3_day_select`   
 - `ups_2nd_day_air` 
 - `ups_2nd_day_air_am`
 - `ups_next_day_air_saver` 

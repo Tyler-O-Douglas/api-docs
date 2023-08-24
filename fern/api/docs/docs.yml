@@ -3,6 +3,8 @@ navigation:
     contents:
       - page: Getting started
         path: ./intro.mdx
+      - page: Carriers
+        path: ./carriers.mdx
   - api: API Reference
 title: String | API Docs
 colors:
