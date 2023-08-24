@@ -14,8 +14,8 @@ title: String | API Docs
 colors:
   accentPrimary: "#a3d3ff"
 logo:
-  dark: ./logo-dark.png
-  light: ./logo-light.png
+  dark: ./assets/logo-dark.png
+  light: ./assets/logo-light.png
   href: https://www.meetstring.com/
 favicon: ./assets/favicon.ico
 navbar-links:
