@@ -6,9 +6,9 @@ navigation:
   - section: Introduction
     contents:
       - page: Getting started
-        path: ./intro.mdx
+        path: ./content/intro.mdx
       - page: Carriers
-        path: ./carriers.mdx
+        path: ./content/carriers.mdx
   - api: API Reference
 title: String | API Docs
 colors:
