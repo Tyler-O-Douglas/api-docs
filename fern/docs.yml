@@ -1,18 +1,25 @@
+instances:
+  - url: string.docs.buildwithfern.com
+    custom-domain: docs.meetstring.com
+
 navigation:
   - section: Introduction
     contents:
       - page: Getting started
-        path: ./intro.mdx
+        path: ./content/intro.mdx
       - page: Carriers
-        path: ./carriers.mdx
+        path: ./content/carriers.mdx
   - api: API Reference
 title: String | API Docs
 colors:
-  accentPrimary: "#a3d3ff"
+  accentPrimary: 
+    dark: "#a3d3ff"
+    light: "#654cba"
 logo:
-  path: ./logo-dark.png
+  dark: ./assets/logo-dark.png
+  light: ./assets/logo-light.png
   href: https://www.meetstring.com/
-favicon: ./favicon.ico
+favicon: ./assets/favicon.ico
 navbar-links:
   - type: secondary
     text: Manage Your Account

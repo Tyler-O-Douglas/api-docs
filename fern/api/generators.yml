@@ -1,8 +1,0 @@
-default-group: local
-groups:
-  local:
-    generators: [] #can add sdk generators later
-    docs:
-      domain: https://string.docs.buildwithfern.com
-      custom-domains: 
-        - https://docs.meetstring.com
