@@ -20,12 +20,10 @@ npm install -g fern-api # Installs CLI
 fern check # Checks if the definition is valid
 ```
 
-## What are generators?
+## How to generate documentation
 
-Generators read in your API definition and output artifacts (e.g. API docs, Python SDK) and are tracked in [generators.yml](./fern/api/generators.yml).
-
-To trigger the generators run:
+Merging to main will trigger documentation to update at https://docs.meetstring.com/ or you can run:
 
 ```bash
-fern generate
+fern generate --docs
 ```
