@@ -1,9 +1,5 @@
 name: api
-auth: MyAuthScheme
-auth-schemes:
-  MyAuthScheme:
-    header: Authorization
-    type: basic
+auth: basic
 error-discrimination:
   strategy: status-code
 environments:
