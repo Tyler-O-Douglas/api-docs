@@ -8,7 +8,7 @@ title: String | API Docs
 colors:
   accentPrimary: "#a3d3ff"
 logo:
-  path: ./logo.png
+  path: ./logo-dark.png
   href: https://www.meetstring.com/
 favicon: ./favicon.ico
 navbar-links:
