@@ -12,7 +12,9 @@ navigation:
   - api: API Reference
 title: String | API Docs
 colors:
-  accentPrimary: "#a3d3ff"
+  accentPrimary: 
+    dark: "#a3d3ff"
+    light: "#654cba"
 logo:
   dark: ./assets/logo-dark.png
   light: ./assets/logo-light.png
