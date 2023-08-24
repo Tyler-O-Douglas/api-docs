@@ -12,15 +12,15 @@ logo:
   href: https://www.meetstring.com/
 favicon: ./favicon.ico
 navbar-links:
-  - type: primary
+  - type: secondary
     text: Manage Your Account
     url: https://billing.stripe.com/p/login/3cscNabV64828N2288
-  - type: primary
-    text: Sign-up!
-    url: https://www.meetstring.com/#pricing
-  - type: primary
+  - type: secondary
     text: Learn More
     url: https://www.meetstring.com/
-  - type: primary
+  - type: secondary
     text: Get Help
     url: mailto:tyler@meetstring.com?subject=String%20API%20Help
+  - type: primary
+    text: Sign Up
+    url: https://www.meetstring.com/#pricing

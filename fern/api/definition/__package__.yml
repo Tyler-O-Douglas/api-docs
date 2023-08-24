@@ -5,6 +5,7 @@ service:
   base-path: ""
   endpoints:
     CreateLeastCostFulfillment:
+      display-name: Least Cost Fulfillment
       docs: For a shipment, find the lowest cost and fasest shipping option based on provided parameters.
       method: POST
       path: /lcf
