@@ -146,10 +146,16 @@ types:
   Service:
     properties:
       carrier:
-        type: string
+        type: CarrierCode
         docs: |
           The carrier that will be used to ship the package.
-          Refer to 'Getting Started' for a list of possible carrier codes.
+          
+          String will return one of the following carrier codes in order to 
+          indicate what carrier you should use to ship your package. 
+
+          If you're using a carrier not incldued in this list, please contact the 
+          String team to discuss adding support for your carrier. 
+          String can support any carrier with an API.
       service:
         type: string
         docs: | 
@@ -185,8 +191,17 @@ types:
           saturdayDelivery: false
           accountNumber: "StringTest12345"
           cost: 12.35
-
   
+  CarrierCode: 
+    enum: 
+      - value: usps
+        docs: USPS Carrier
+      - value: ups
+        docs: UPS Carrier
+      - value: fedex
+        docs: FEDEX Carrier
+      - value: dhl
+        docs: DHL Carrier
 
   Parcel:
     properties:
