@@ -46,8 +46,13 @@ types:
         docs: |
           The time-in-transit limit for a shipment.  If no limit, set as null.
       package:
-        type: Package
+        type: optional<Package>
         docs: The dimensions and weight of the package being shipped.
+      items: 
+        type: optional<Items>
+        docs: |
+          The items included in the order you're shipping.
+          Used if you want to find the smallest package for an order
 
   ShipTo:
     properties:
@@ -90,6 +95,28 @@ types:
     enum:
       - US
     docs: The country you're shipping an order to.  Only 'US' is supported at this time.
+
+  Items:
+    type: set<Item>
+    docs: |
+      The items included in the order you're shipping.
+      Used if you want to find the smallest package for an order
+    examples:
+      - name: Example1
+        value:
+          - sku: "12345"
+            quantity: 1
+          - sku: "67890"
+            quantity: 2
+
+  Item:
+    properties:
+      sku:
+        type: string
+        docs: The unique identifier String will use to model how the item can be packed onto a package.
+      quantity:
+        type: integer
+        docs: The number of this item included in the order.
 
   Package:
     properties:
