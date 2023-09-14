@@ -47,12 +47,14 @@ types:
           The time-in-transit limit for a shipment.  If no limit, set as null.
       package:
         type: optional<Package>
-        docs: The dimensions and weight of the package being shipped.
+        docs: |
+          The dimensions and weight of the package being shipped.
+          Add this object if you do not want String to find a package size for you.
       items: 
         type: optional<Items>
         docs: |
           The items included in the order you're shipping.
-          Used if you want to find the smallest package for an order
+          Add this array to the order object if you want to find the smallest package based on items you're shipping.
 
   ShipTo:
     properties:
