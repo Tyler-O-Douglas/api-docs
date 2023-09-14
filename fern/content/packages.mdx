@@ -1,3 +1,12 @@
+### How String Handles Packages
+Out of the box String has two options for handling packages. 
+1) If you want String to find the smallest package
+based on items you're shipping, add an array of items to the "Items" property in the order object you send to String. 
+2) If you want to provide the package and weight yourself, add an object to the "Package" property in the order object that you send to String.
+You must provide either a package or set of items for String to return anything.
+For either option you select, the repsonse from String will contain both the dimensions and weight of the selected package (parcel).  
+Additionally, the respinse from String will include a package code that you can use to determine how to configure your shipping label.
+
 ### Package Codes
 
 String will return one of the following package type codes to indicate how your parcel will be rated by the carrier selected.
