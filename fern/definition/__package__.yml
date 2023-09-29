@@ -45,9 +45,9 @@ types:
         type: ShipTo
         docs: The address the shipment is being shipped to.
       deliveryCommitment:
-        type: integer
+        type: optional<integer>
         docs: |
-          The time-in-transit limit for a shipment.  If no limit, set as null.
+          The time-in-transit limit for a shipment.  If no limit, set as null or don't set at all.
       package:
         type: optional<Package>
         docs: |
