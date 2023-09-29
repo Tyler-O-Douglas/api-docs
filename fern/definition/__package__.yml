@@ -13,6 +13,9 @@ service:
       response: LeastCostFulfillment
       errors:
         - NotAuthorized
+        - BadRequest
+        - InternalServerError
+        - NotFound
       examples: 
         - request: $CreateLcfRequest.Example1
           response: 
@@ -27,7 +30,7 @@ types:
         value:
           order:
             orderId: "shopify_12345"
-            shipTo: $ShipTo.WhiteHouse
+            shipTo: $ShipTo.Apple
             deliveryCommitment: 3
             package: $Package.Example1
   
@@ -84,12 +87,12 @@ types:
         type: boolean
         docs: If the address is residential, set as true.  If commercial, set as false.
     examples:
-      - name: WhiteHouse
+      - name: Apple
         value:
-          street1: 1600 Pennsylvania Avenue NW
-          city: Washington DC
-          state: Washington DC
-          postalCode: "20500"
+          street1: "One Apple Park Way"
+          city: "Cupertino"
+          state: "CA"
+          postalCode: "95014"
           country: US
           isResidential: false
   
@@ -166,7 +169,7 @@ types:
       - name: Example1
         value: 
           orderId: "shopify_12345"
-          shipTo: $ShipTo.WhiteHouse
+          shipTo: $ShipTo.Apple
           tags: ['LEAST COST FULFILLMENT']
           comments: ['UPS - StringTest12345 - Package - Estimated Delivery Date: 2023-06-09']
           service: $Service.Example1
@@ -201,7 +204,7 @@ types:
       saturdayDelivery:
         type: boolean
         docs: |
-          If the package can be delivered by the carrier on Saturday. 'True' is only possible for UPS and FedEx.
+          If the package includes an extra chrage to be delivered on Saturday. 'True' is only possible for UPS and FedEx.
           Your shipment may still be delivered on Saturday even if this is set to 'False'.
       accountNumber:
         type: string
@@ -288,4 +291,10 @@ types:
 
 errors:
   NotAuthorized:
-    status-code: 401
+    status-code: 401  
+  BadRequest:
+    status-code: 400
+  NotFound:
+    status-code: 404
+  InternalServerError:
+    status-code: 500
