@@ -1,14 +1,18 @@
 ### Welcome 👋
 
-Welcome to String's API documentation! Here you'll find information about the single endpoint available to you,
-as well as the parameters and responses it will accept and return. String finds the fastest and lowest cost shipping option for any parcel shipment
-in the United States based on the parameters you provide. 
+Welcome to String's API documentation! Here you'll find information about the endpoints available to you,
+as well as the parameters and responses these endpoints will accept and return. 
 
-String can filter out different carriers and service levels based on your preferences and business rules.
+String is here to help you ship orders to your customers at the lowest cost.  To do that, String lets you 
+find the smallest package option an order will fit into.  String also finds the fastest and lowest cost
+ shipping option for any parcel shipment in the United States based on the parameters you provide. 
+
+String can filter out different packages, carriers, or shipping service levels based on your preferences and business rules.
 String can also filter out different carriers and service levels based on time-in-transit requirements.
-All of this on the backend so all you need to do is request a shipping rate and print a label!
 
 ### How String Works
+
+String has two endpoints available to you.  The first is the [/lcf](https://docs.meetstring.com/api-reference/least-cost-fulfillment) endpoint.
 
 'LCF' stands for 'Least Cost Fulfillment' and is the name of the endpoint you'll use to request shipping rates from String.
 String returns the fastest and most cost-effective shipping configuration for a shipment based on the parameters you provide.  
@@ -23,6 +27,14 @@ String considers any qualfiying carrier, service level, and package option avail
 In order to indicate the proper configuration for a shipment, String will return the following codes to you which must be interpreted
 by your application and mapped to the appropriate values for the selected carrier.  Please refer to the [LCF endpoint documentation](https://docs.meetstring.com/api-reference/least-cost-fulfillment)
 for a complete example response and more information on how to properly make a request to the /lcf endpoint.
+
+The second endpoint available to you is the [/pack](https://docs.meetstring.com/api-reference/pack) endpoint.
+
+This endpoint is used to find the smallest package option an order will fit into.  
+String returns the smallest package option that will fit all the items in an order.
+
+If you use Flat Rate packaging, String will return the smallest Flat Rate package in addition to the smallest custom 
+package option that will fit all the items in an order.
 
 ### Up-Time
 
