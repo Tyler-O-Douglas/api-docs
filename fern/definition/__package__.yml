@@ -20,8 +20,42 @@ service:
         - request: $CreateLcfRequest.Example1
           response: 
             body: $LeastCostFulfillment.Example1
+    CreatePackage:
+      display-name: Pack Order
+      docs: Find the smallest package(s) all items in an order can fit into.
+      method: POST
+      path: /pack
+      request: CreatePackRequest
+      response: PackageOptions
+      errors:
+        - NotAuthorized
+        - BadRequest
+        - InternalServerError
+        - NotFound
+      examples: 
+        - request: $CreatePackRequest.Example1
+          response: 
+            body: $PackageOptions.Example1
 
 types:
+
+  CreatePackRequest:
+    properties:
+      orderId: 
+        type: string
+        docs: |
+          A unique identifier for the shipment.
+          This is used for future reference and must be unique.
+      items: 
+        type: Items
+        docs: |
+          The items included in the order you want String to pack.
+    examples:
+      - name: Example1
+        value:
+            orderId: "shopify_12345"
+            items: $Items.Example1
+
   CreateLcfRequest:
     properties:
       order: Order
@@ -146,6 +180,49 @@ types:
     examples:
       - name: Example1
         value: 1.5
+
+  PackageOptions: 
+    properties:
+      id: 
+        type: string
+        docs: |
+          The unique identifier you specified for the request.
+      packages: 
+        type: set<PackageOption>
+        docs: |
+          An array of packages that can fit all items in the order.
+          Right now, String will only return one package.
+          In the future, String will return multiple packages if the order requires it.
+    examples: 
+      - name: Example1
+        value: 
+          id: "shopify_12345"
+          packages: [$PackageOption.Example1]
+
+  PackageOption:
+    properties:
+      name: 
+        type: string
+        docs: |
+          The name of the package String found that can fit all items in the order.
+      weight: 
+        type: double
+        docs: |
+          The weight of the package packed with items in it.
+          in pounds (lbs). Includes up to 2 decimal places.
+      dimensions:
+        type: set<double>
+        docs: |
+          The length, width, and height of the package in inches.  Order does not matter.
+    examples:
+      - name: Example1
+        value:
+          name: "Example Package"
+          weight: 1.5
+          dimensions: [14, 10, 3]
+
+        
+
 
   LeastCostFulfillment: 
     properties:
