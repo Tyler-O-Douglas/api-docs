@@ -150,17 +150,26 @@ types:
         type: optional<string>
         docs: |
           The unique identifier String will use to model how the item can be packed onto a package.
-          Do not provide a sku if you want to provide the item's dimensions and weight.
+          
+          DO NOT PROVIDE A SKU IF YOU PROVIDE DIMENSIONS AND WEIGHT.
+          
+          Example is just for reference.
       dimensions: 
         type: optional<Dimensions>
         docs: |
           The length, width, and height of the item in inches.  Order does not matter.
-          Do not provide dimensions if you want to provide the item's sku.
+          
+          DO NOT PROVIDE DIMENSIONS IF YOU PROVIDE A SKU.
+          
+          Example is just for reference.
       weight: 
         type: optional<Weight>
         docs: |
           The weight of the item in pounds (lbs). Include up to 2 decimal places.
-          Do not provide weight if you want to provide the item's sku.
+          
+          DO NOT PROVIDE WEIGHT IF YOU PROVIDE A SKU.
+          
+          Example is just for reference.
       quantity:
         type: integer
         docs: The number of this item included in the order.
