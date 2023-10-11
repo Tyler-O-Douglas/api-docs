@@ -141,8 +141,6 @@ types:
           - dimensions: $Dimensions.Example1
             weight: $Weight.Example1
             quantity: 1
-          - sku: "67890"
-            quantity: 2
 
   Item:
     properties:
@@ -152,8 +150,9 @@ types:
           The unique identifier String will use to model how the item can be packed onto a package.
           
           DO NOT PROVIDE A SKU IF YOU PROVIDE DIMENSIONS AND WEIGHT.
-          
-          Example is just for reference.
+
+          If you use a SKU for one item, you must use a SKU for all items in the order.
+
       dimensions: 
         type: optional<Dimensions>
         docs: |
@@ -161,7 +160,7 @@ types:
           
           DO NOT PROVIDE DIMENSIONS IF YOU PROVIDE A SKU.
           
-          Example is just for reference.
+          If you use dimensions for one item, you must use dimensions for all items in the order.
       weight: 
         type: optional<Weight>
         docs: |
@@ -169,10 +168,13 @@ types:
           
           DO NOT PROVIDE WEIGHT IF YOU PROVIDE A SKU.
           
-          Example is just for reference.
+          If you use weight for one item, you must use weight for all items in the order.
       quantity:
         type: integer
-        docs: The number of this item included in the order.
+        docs: | 
+          The number of this item included in the order.
+
+          This must be inlcuded for every item regardless of whether you provide a SKU or dimensions and weight.
 
   Package:
     properties:
