@@ -1,0 +1,34 @@
+### How String Handles Packing
+
+String is the only API that finds the smallest package for any given order even when deformable items or packages are included.
+Deformable items are things like t-shirts that can be folded, crushed, or otherwise made to occupy a different set of dimensions than its original form factor.
+
+As of today, String can only handle packing orders into a single package.  We are working on adding support for multiple packages.
+In addition to returning yor own custom packaging, String can also return flat-rate packaging options from carirers like USPS, FedEx, and UPS.
+
+To have String find the smallest package for an order, you have two options for providing String with your product information. 
+
+1) Provide String with a set of skus that String holds modelling information for.
+2) Provide String with a set of items where you define their dimensions and weight.
+
+Do not mix these two options.  If you are providing skus for one item, you must provide skus for all items.  
+If you are providing dimensions and weight for one item, you must provide dimensions and weight for all items.
+
+If you choose option 2, String is not able to calculate deformability. 
+For either option you select, the response from String will contain both the dimensions and weight of the selected package and the items in it.  
+
+
+#### Flat-rate Packaging
+
+If String returns a flat-rate packaging option, it will be appended to the same object as the custom package String returns to you.
+
+#### Deformable Items and Packages
+
+When you elect for String to store models of your items in our database, we are able to calculate their deformability.
+When calculating deformability, String will create multiple itterations of a product in different form factors to find the smallest package that fits all of the items.
+Because deformability varies by product, material, your process, and packaging, we highly encourage your feedback and testing to ensure that String is returning the best results for your business.
+
+Similarly, String calcualtes package deformability. Package deformability also depends on many factors. 
+We also encourage your feedback and testing to ensure that String is returning the best results for your business.
+
+Models for packages and products can be updated by the String team at any time to reflect your feedback and testing.

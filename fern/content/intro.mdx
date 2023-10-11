@@ -3,38 +3,50 @@
 Welcome to String's API documentation! Here you'll find information about the endpoints available to you,
 as well as the parameters and responses these endpoints will accept and return. 
 
-String is here to help you ship orders to your customers at the lowest cost.  To do that, String lets you 
-find the smallest package option an order will fit into.  String also finds the fastest and lowest cost
+String is here to help you ship orders to your customers at the lowest cost.  To do that, String
+finds the smallest package option an order will fit into.  String also finds the fastest and lowest cost
  shipping option for any parcel shipment in the United States based on the parameters you provide. 
 
 String can filter out different packages, carriers, or shipping service levels based on your preferences and business rules.
 String can also filter out different carriers and service levels based on time-in-transit requirements.
 
-### How String Works
+### The endpoints
 
-String has two endpoints available to you.  The first is the [/lcf](https://docs.meetstring.com/api-reference/least-cost-fulfillment) endpoint.
+String has two endpoints available to you to help you optimize shipments.
 
-'LCF' stands for 'Least Cost Fulfillment' and is the name of the endpoint you'll use to request shipping rates from String.
+#### Least Cost Fulfillment
+
+The first is the [/lcf](https://docs.meetstring.com/api-reference/least-cost-fulfillment) endpoint.
+
+'LCF' stands for 'Least Cost Fulfillment' and is the name of the endpoint you'll use to get a fully optomized shipping configuration from String.
 String returns the fastest and most cost-effective shipping configuration for a shipment based on the parameters you provide.  
+String also returns the optimal package size if requested.
 
-To find the optimal service for every shipment, String It factors in things like package cost, delivery speed, fees, and any surcharges.
+To find the optimal shipping service for every shipment, String factors in things like package cost, delivery speed, fees, and surcharges.
 By using accurate, robust, and real-time data, String can precisely find the best shipping option for any parcel shipment in the United States with a single API request.
 
 After you make a request to the [/lcf](https://docs.meetstring.com/api-reference/least-cost-fulfillment) endpoint,
-String does the hard work to find the best carrier and service level for your shipment.
+String does the hard work to find the best package, carrier, and service level for your shipment.
 String considers any qualfiying carrier, service level, and package option available for you based on the parameters you provide. 
 
-In order to indicate the proper configuration for a shipment, String will return the following codes to you which must be interpreted
-by your application and mapped to the appropriate values for the selected carrier.  Please refer to the [LCF endpoint documentation](https://docs.meetstring.com/api-reference/least-cost-fulfillment)
-for a complete example response and more information on how to properly make a request to the /lcf endpoint.
+What's particuarly unique about String is that it can compare flat rate shipping options to dynamically rated shipping options.
+This is only possible when you allow String to find the optimal package size for your shipment.
+
+In order to indicate the proper configuration for a shipment, String uses a set of codes to indicate the carrier used, serivce level, and package option. 
+Visit the [Carriers](./codes) section for code definitions.
+
+
+#### Packing
 
 The second endpoint available to you is the [/pack](https://docs.meetstring.com/api-reference/pack) endpoint.
 
 This endpoint is used to find the smallest package option an order will fit into.  
-String returns the smallest package option that will fit all the items in an order.
+String wil only return the smallest package option that will fit all the items in an order.
 
-If you use Flat Rate packaging, String will return the smallest Flat Rate package in addition to the smallest custom 
-package option that will fit all the items in an order.
+If you use Flat Rate packaging from carriers like USPS, FedEx, and UPS, String will return the smallest Flat Rate package in addition to the smallest custom 
+package.
+
+More information on how our packing algorithm works can be found in the [Packing](./packing) description.
 
 ### Up-Time
 
@@ -43,32 +55,7 @@ Because we're consistently releasing impovements for String while maintiaing hig
 we have a daily maintanence window where the API may be down for as long as 20 minutes.
 Our maintanence window is from 11PM PT to 12pm PT in order to minimize service interuptions.
 
-### Our Single Endpoint Model
-
-Our goal is to make String as simple and effective as possible so we've designed our API to be a single endpoint.
-The endpoint is available at `https://api.meetstring.com/lcf`.
-
-In the future we may add additional endpoints to the API to incorporate new features.
-
 ### Authorization
 
-String uses Basic Authorization with Base64 encoding of your credendtials to secure your requests.
-To access the endpoint, you must use Base64 to encode your username and password combination provided by String.
-
-Encoding your credentials are as easy as seperating your username and password with a colon `username:password` and then encoding the formed string with a Base64 plugin or tool.
-An example of how to use Base64 to encode your username and password combination can be found [here](https://www.base64encode.org/).
-
-You can also use something like the Base64 package in node.js and run `b64.btoa('username:password')`. 
-They should look like `Basic <your encoded credentials>` when you're done.
-
-Your credentials will be provided to you by the String team.  
+String will provide you with an API key that you will use to make requests to the API.
 Do not share these credentials outside of your organziation because any requests made with your credentials will be billed to your account.
-
-### Carriers
-Vist the [Carriers](./carriers) section for more information on how String will return what carrier should be used to you.
-
-### Services
-Visit the [Services](./services) section for more information on how String will return what service should be used to you.
-
-### Packages
-Visit the [Packages](./packages) section for more information on how String will return what package should be used to you.

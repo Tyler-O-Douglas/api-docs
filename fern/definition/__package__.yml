@@ -58,18 +58,6 @@ types:
 
   CreateLcfRequest:
     properties:
-      order: Order
-    examples:
-      - name: Example1
-        value:
-          order:
-            orderId: "shopify_12345"
-            shipTo: $ShipTo.Apple
-            deliveryCommitment: 3
-            package: $Package.Example1
-  
-  Order:
-    properties:
       orderId:
         type: string
         docs: |
@@ -92,6 +80,13 @@ types:
         docs: |
           The items included in the order you're shipping.
           Add this array to the order object if you want to find the smallest package based on items you're shipping.
+    examples:
+      - name: Example1
+        value:
+            orderId: "shopify_12345"
+            shipTo: $ShipTo.Apple
+            deliveryCommitment: 3
+            package: $Package.Example1
 
   ShipTo:
     properties:
@@ -143,7 +138,8 @@ types:
     examples:
       - name: Example1
         value:
-          - sku: "12345"
+          - dimensions: $Dimensions.Example1
+            weight: $Weight.Example1
             quantity: 1
           - sku: "67890"
             quantity: 2
@@ -151,8 +147,20 @@ types:
   Item:
     properties:
       sku:
-        type: string
-        docs: The unique identifier String will use to model how the item can be packed onto a package.
+        type: optional<string>
+        docs: |
+          The unique identifier String will use to model how the item can be packed onto a package.
+          Do not provide a sku if you want to provide the item's dimensions and weight.
+      dimensions: 
+        type: optional<Dimensions>
+        docs: |
+          The length, width, and height of the item in inches.  Order does not matter.
+          Do not provide dimensions if you want to provide the item's sku.
+      weight: 
+        type: optional<Weight>
+        docs: |
+          The weight of the item in pounds (lbs). Include up to 2 decimal places.
+          Do not provide weight if you want to provide the item's sku.
       quantity:
         type: integer
         docs: The number of this item included in the order.
